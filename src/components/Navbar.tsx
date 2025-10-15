@@ -1,42 +1,41 @@
 import { useState } from 'react';
 import { Menu, X, User, LogOut } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/BagASoilLogo.jpg';
 
-interface NavbarProps {
-  onNavigate: (page: string) => void;
-  currentPage: string;
-}
-
-export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, profile, signOut, isAdmin } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSignOut = async () => {
     try {
       await signOut();
-      onNavigate('home');
+      navigate('/');
     } catch (error) {
       console.error('Error signing out:', error);
     }
   };
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'products', label: 'Products' },
-    { id: 'sustainability', label: 'Sustainability' },
-    { id: 'community', label: 'Community' },
-    { id: 'certifications', label: 'Certificates' }, // updated
-    { id: 'contact', label: 'Contact' },
+    { path: '/', label: 'Home' },
+    { path: '/products', label: 'Products' },
+    { path: '/sustainability', label: 'Sustainability' },
+    { path: '/community', label: 'Community' },
+    { path: '/certifications', label: 'Certificates' },
+    { path: '/contact', label: 'Contact' },
   ];
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
+          {/* Logo */}
           <div className="flex items-center">
             <button
-              onClick={() => onNavigate('home')}
+              onClick={() => navigate('/')}
               className="flex items-center space-x-2"
             >
               <img src={logo} alt="Bag a Soil Logo" className="h-10 w-10 object-contain" />
@@ -44,13 +43,14 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
             </button>
           </div>
 
+          {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <button
-                key={item.id}
-                onClick={() => onNavigate(item.id)}
+                key={item.path}
+                onClick={() => navigate(item.path)}
                 className={`text-sm font-medium transition-colors ${
-                  currentPage === item.id
+                  location.pathname === item.path
                     ? 'text-green-600'
                     : 'text-gray-700 hover:text-green-600'
                 }`}
@@ -60,19 +60,20 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
             ))}
           </div>
 
+          {/* Right Section */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <>
                 {isAdmin && (
                   <button
-                    onClick={() => onNavigate('admin')}
+                    onClick={() => navigate('/admin')}
                     className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
                   >
                     Admin
                   </button>
                 )}
                 <button
-                  onClick={() => onNavigate('dashboard')}
+                  onClick={() => navigate('/dashboard')}
                   className="flex items-center space-x-2 text-gray-700 hover:text-green-600"
                 >
                   <User className="h-5 w-5" />
@@ -88,13 +89,13 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
             ) : (
               <>
                 <button
-                  onClick={() => onNavigate('login')}
+                  onClick={() => navigate('/login')}
                   className="text-sm font-medium text-gray-700 hover:text-green-600"
                 >
                   Sign In
                 </button>
                 <button
-                  onClick={() => onNavigate('signup')}
+                  onClick={() => navigate('/signup')}
                   className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
                 >
                   Get Started
@@ -103,6 +104,7 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
             )}
           </div>
 
+          {/* Mobile Menu Toggle */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -114,18 +116,19 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
         </div>
       </div>
 
+      {/* Mobile Dropdown Menu */}
       {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
+        <div className="md:hidden bg-white shadow-lg">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
               <button
-                key={item.id}
+                key={item.path}
                 onClick={() => {
-                  onNavigate(item.id);
+                  navigate(item.path);
                   setIsOpen(false);
                 }}
                 className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${
-                  currentPage === item.id
+                  location.pathname === item.path
                     ? 'bg-green-50 text-green-600'
                     : 'text-gray-700 hover:bg-gray-50'
                 }`}
@@ -133,12 +136,13 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
                 {item.label}
               </button>
             ))}
+
             {user ? (
               <>
                 {isAdmin && (
                   <button
                     onClick={() => {
-                      onNavigate('admin');
+                      navigate('/admin');
                       setIsOpen(false);
                     }}
                     className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
@@ -148,7 +152,7 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
                 )}
                 <button
                   onClick={() => {
-                    onNavigate('dashboard');
+                    navigate('/dashboard');
                     setIsOpen(false);
                   }}
                   className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
@@ -156,7 +160,10 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
                   My Account
                 </button>
                 <button
-                  onClick={handleSignOut}
+                  onClick={() => {
+                    handleSignOut();
+                    setIsOpen(false);
+                  }}
                   className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50"
                 >
                   Sign Out
@@ -166,7 +173,7 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
               <>
                 <button
                   onClick={() => {
-                    onNavigate('login');
+                    navigate('/login');
                     setIsOpen(false);
                   }}
                   className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50"
@@ -175,7 +182,7 @@ export default function Navbar({ onNavigate, currentPage }: NavbarProps) {
                 </button>
                 <button
                   onClick={() => {
-                    onNavigate('signup');
+                    navigate('/signup');
                     setIsOpen(false);
                   }}
                   className="block w-full text-left px-3 py-2 rounded-md text-base font-medium bg-green-600 text-white hover:bg-green-700"

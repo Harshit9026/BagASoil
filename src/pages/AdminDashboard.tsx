@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Package, MessageSquare, Users, TrendingUp, Mail } from 'lucide-react';
+import { Package, MessageSquare, TrendingUp, Mail } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -36,6 +36,16 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const [recentInquiries, setRecentInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'overview' | 'inquiries' | 'products'>('overview');
+
+  // ✅ Fix back button navigation
+  useEffect(() => {
+    window.history.pushState(null, '', window.location.href);
+    const handlePopState = () => {
+      onNavigate('home'); // navigate back to home when pressing back button
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [onNavigate]);
 
   useEffect(() => {
     if (!isAdmin) {
@@ -85,7 +95,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
       if (error) throw error;
 
       setRecentInquiries(prev =>
-        prev.map(inq => inq.id === inquiryId ? { ...inq, status: newStatus } : inq)
+        prev.map(inq => (inq.id === inquiryId ? { ...inq, status: newStatus } : inq))
       );
 
       await loadDashboardData();
@@ -116,84 +126,28 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <Package className="h-6 w-6 text-green-600" />
-              </div>
-              <span className="text-sm text-gray-500">Total</span>
-            </div>
-            <div className="text-3xl font-bold text-gray-900 mb-1">{stats.totalProducts}</div>
-            <div className="text-sm text-gray-600">Products</div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <MessageSquare className="h-6 w-6 text-blue-600" />
-              </div>
-              <span className="text-sm text-gray-500">All Time</span>
-            </div>
-            <div className="text-3xl font-bold text-gray-900 mb-1">{stats.totalInquiries}</div>
-            <div className="text-sm text-gray-600">Inquiries</div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                <TrendingUp className="h-6 w-6 text-orange-600" />
-              </div>
-              <span className="text-sm text-gray-500">Pending</span>
-            </div>
-            <div className="text-3xl font-bold text-gray-900 mb-1">{stats.newInquiries}</div>
-            <div className="text-sm text-gray-600">New Inquiries</div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <Mail className="h-6 w-6 text-purple-600" />
-              </div>
-              <span className="text-sm text-gray-500">Active</span>
-            </div>
-            <div className="text-3xl font-bold text-gray-900 mb-1">{stats.subscribers}</div>
-            <div className="text-sm text-gray-600">Subscribers</div>
-          </div>
+          <DashboardCard icon={<Package className="h-6 w-6 text-green-600" />} title="Products" count={stats.totalProducts} color="green" />
+          <DashboardCard icon={<MessageSquare className="h-6 w-6 text-blue-600" />} title="Inquiries" count={stats.totalInquiries} color="blue" />
+          <DashboardCard icon={<TrendingUp className="h-6 w-6 text-orange-600" />} title="New Inquiries" count={stats.newInquiries} color="orange" />
+          <DashboardCard icon={<Mail className="h-6 w-6 text-purple-600" />} title="Subscribers" count={stats.subscribers} color="purple" />
         </div>
 
         <div className="bg-white rounded-lg shadow-sm">
           <div className="border-b border-gray-200">
             <div className="flex space-x-8 px-6">
-              <button
-                onClick={() => setActiveTab('overview')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'overview'
-                    ? 'border-green-600 text-green-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                Recent Inquiries
-              </button>
-              <button
-                onClick={() => setActiveTab('inquiries')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'inquiries'
-                    ? 'border-green-600 text-green-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                All Inquiries
-              </button>
-              <button
-                onClick={() => setActiveTab('products')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'products'
-                    ? 'border-green-600 text-green-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                Manage Products
-              </button>
+              {['overview', 'inquiries', 'products'].map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab as any)}
+                  className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === tab
+                      ? 'border-green-600 text-green-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  {tab === 'overview' ? 'Recent Inquiries' : tab === 'inquiries' ? 'All Inquiries' : 'Manage Products'}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -203,31 +157,31 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                 {recentInquiries.length === 0 ? (
                   <p className="text-center text-gray-500 py-8">No inquiries yet</p>
                 ) : (
-                  recentInquiries.map((inquiry) => (
+                  recentInquiries.map(inquiry => (
                     <div key={inquiry.id} className="border border-gray-200 rounded-lg p-4">
                       <div className="flex items-start justify-between mb-3">
                         <div>
                           <h3 className="font-bold text-gray-900">{inquiry.name}</h3>
                           <p className="text-sm text-gray-600">{inquiry.email}</p>
-                          {inquiry.phone && (
-                            <p className="text-sm text-gray-600">{inquiry.phone}</p>
-                          )}
+                          {inquiry.phone && <p className="text-sm text-gray-600">{inquiry.phone}</p>}
                         </div>
                         <div className="flex items-center space-x-2">
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                            inquiry.status === 'new'
-                              ? 'bg-orange-100 text-orange-700'
-                              : inquiry.status === 'in_progress'
-                              ? 'bg-blue-100 text-blue-700'
-                              : inquiry.status === 'quoted'
-                              ? 'bg-green-100 text-green-700'
-                              : 'bg-gray-100 text-gray-700'
-                          }`}>
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-medium ${
+                              inquiry.status === 'new'
+                                ? 'bg-orange-100 text-orange-700'
+                                : inquiry.status === 'in_progress'
+                                ? 'bg-blue-100 text-blue-700'
+                                : inquiry.status === 'quoted'
+                                ? 'bg-green-100 text-green-700'
+                                : 'bg-gray-100 text-gray-700'
+                            }`}
+                          >
                             {inquiry.status.replace('_', ' ')}
                           </span>
                           <select
                             value={inquiry.status}
-                            onChange={(e) => updateInquiryStatus(inquiry.id, e.target.value)}
+                            onChange={e => updateInquiryStatus(inquiry.id, e.target.value)}
                             className="text-sm border border-gray-300 rounded px-2 py-1"
                           >
                             <option value="new">New</option>
@@ -243,9 +197,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
                         </p>
                       )}
                       <p className="text-sm text-gray-700 mb-2">{inquiry.message}</p>
-                      <p className="text-xs text-gray-500">
-                        {new Date(inquiry.created_at).toLocaleString()}
-                      </p>
+                      <p className="text-xs text-gray-500">{new Date(inquiry.created_at).toLocaleString()}</p>
                     </div>
                   ))
                 )}
@@ -274,6 +226,28 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ✅ Reusable small card component
+function DashboardCard({ icon, title, count, color }: any) {
+  const colorMap: any = {
+    green: 'bg-green-100',
+    blue: 'bg-blue-100',
+    orange: 'bg-orange-100',
+    purple: 'bg-purple-100',
+  };
+  return (
+    <div className="bg-white rounded-lg shadow-sm p-6">
+      <div className="flex items-center justify-between mb-4">
+        <div className={`w-12 h-12 ${colorMap[color]} rounded-full flex items-center justify-center`}>
+          {icon}
+        </div>
+        <span className="text-sm text-gray-500">Total</span>
+      </div>
+      <div className="text-3xl font-bold text-gray-900 mb-1">{count}</div>
+      <div className="text-sm text-gray-600">{title}</div>
     </div>
   );
 }
