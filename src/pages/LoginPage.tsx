@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LogIn, Mail, Lock } from 'lucide-react';
+import { LogIn, Mail, Lock, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 interface LoginPageProps {
@@ -29,8 +29,16 @@ export default function LoginPage({ onNavigate }: LoginPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex flex-col items-center justify-center px-4 py-12">
+      
+      {/* Back Arrow */}
+      <div className="absolute top-6 left-6 cursor-pointer flex items-center text-green-600 hover:text-green-700"
+           onClick={() => onNavigate('home')}>
+        <ArrowLeft className="h-6 w-6 mr-1" />
+        <span className="font-medium">Back</span>
+      </div>
+
+      <div className="max-w-md w-full mt-12">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
           <p className="text-gray-600">Sign in to your account</p>
