@@ -1353,13 +1353,105 @@ export default function HomePage() {
   const sectionRef = useRef(null);
   const navigate = useNavigate();
 
-  const logos = [
-    { icon: Building2, name: 'Corporate Partners', color: 'from-green-400 to-emerald-400' },
-    { icon: Store, name: 'Retail Chains', color: 'from-emerald-400 to-teal-400' },
-    { icon: Sprout, name: 'Eco Startups', color: 'from-teal-400 to-cyan-400' },
-    { icon: ShoppingBag, name: 'E-commerce', color: 'from-green-500 to-emerald-500' },
-    { icon: Package, name: 'Logistics', color: 'from-emerald-500 to-green-600' },
-  ];
+  // const logos = [
+  //   { icon: Building2, name: 'Corporate Partners', color: 'from-green-400 to-emerald-400' },
+  //   { icon: Store, name: 'Retail Chains', color: 'from-emerald-400 to-teal-400' },
+  //   { icon: Sprout, name: 'Eco Startups', color: 'from-teal-400 to-cyan-400' },
+  //   { icon: ShoppingBag, name: 'E-commerce', color: 'from-green-500 to-emerald-500' },
+  //   { icon: Package, name: 'Logistics', color: 'from-emerald-500 to-green-600' },
+  // ];
+
+  // ✅ Define SVGs as components OUTSIDE the array
+const AmazonLogo = () => (
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <text x="5" y="28" fontFamily="Arial Black,sans-serif" fontSize="22" fontWeight="900" fill="#FF9900">amazon</text>
+    <path d="M8 33 Q30 42 55 36" stroke="#FF9900" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+    <polygon points="55,33 60,36 55,39" fill="#FF9900"/>
+  </svg>
+);
+
+const FlipkartLogo = () => (
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="40" rx="6" fill="#2874F0"/>
+    <text x="50" y="26" fontFamily="Arial,sans-serif" fontSize="15" fontWeight="700" fill="white" textAnchor="middle">flipkart</text>
+  </svg>
+);
+
+const SwiggyLogo = () => (
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="14" fill="#FC8019"/>
+    <path d="M20 10 Q28 14 28 20 Q28 27 20 30 Q16 32 14 28 Q12 24 16 22 Q20 20 20 16" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+    <text x="38" y="25" fontFamily="Arial,sans-serif" fontSize="14" fontWeight="700" fill="#FC8019">swiggy</text>
+  </svg>
+);
+
+const ZomatoLogo = () => (
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <text x="6" y="27" fontFamily="Arial,sans-serif" fontSize="16" fontWeight="800" fill="#E23744">zomato</text>
+    <circle cx="88" cy="20" r="8" fill="#E23744"/>
+    <text x="88" y="24" fontFamily="Arial,sans-serif" fontSize="10" fontWeight="700" fill="white" textAnchor="middle">z</text>
+  </svg>
+);
+
+const BigBasketLogo = () => (
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="40" rx="6" fill="#84C225"/>
+    <text x="50" y="17" fontFamily="Arial,sans-serif" fontSize="9" fontWeight="700" fill="white" textAnchor="middle">big</text>
+    <text x="50" y="30" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="700" fill="white" textAnchor="middle">basket</text>
+  </svg>
+);
+
+const NykaaLogo = () => (
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <text x="8" y="27" fontFamily="Georgia,serif" fontSize="20" fontWeight="700" fill="#FC2779">nykaa</text>
+    <circle cx="85" cy="14" r="5" fill="#FC2779"/>
+    <circle cx="85" cy="14" r="2.5" fill="white"/>
+  </svg>
+);
+
+const MeeshoLogo = () => (
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="40" rx="8" fill="#9B2EE4"/>
+    <text x="50" y="26" fontFamily="Arial,sans-serif" fontSize="14" fontWeight="700" fill="white" textAnchor="middle">meesho</text>
+  </svg>
+);
+
+const BlinkitLogo = () => (
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <rect width="34" height="34" x="2" y="3" rx="6" fill="#FFE000"/>
+    <text x="19" y="26" fontFamily="Arial Black,sans-serif" fontSize="18" fontWeight="900" fill="#1A1A1A" textAnchor="middle">⚡</text>
+    <text x="60" y="26" fontFamily="Arial,sans-serif" fontSize="14" fontWeight="700" fill="#1A1A1A" textAnchor="middle">blinkit</text>
+  </svg>
+);
+
+const MyntraLogo = () => (
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="50,4 58,20 50,36 42,20" fill="#FF3F6C"/>
+    <text x="66" y="26" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="700" fill="#FF3F6C" textAnchor="middle">myntra</text>
+  </svg>
+);
+
+const DunzoLogo = () => (
+  <svg viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+    <rect width="38" height="38" x="1" y="1" rx="8" fill="#00D290"/>
+    <text x="20" y="26" fontFamily="Arial Black,sans-serif" fontSize="16" fontWeight="900" fill="white" textAnchor="middle">D</text>
+    <text x="60" y="26" fontFamily="Arial,sans-serif" fontSize="14" fontWeight="700" fill="#00D290">dunzo</text>
+  </svg>
+);
+
+// ✅ Now reference components in the array
+const logos = [
+  { name: "Amazon",     Logo: AmazonLogo },
+  { name: "Flipkart",   Logo: FlipkartLogo },
+  { name: "Swiggy",     Logo: SwiggyLogo },
+  { name: "Zomato",     Logo: ZomatoLogo },
+  { name: "BigBasket",  Logo: BigBasketLogo },
+  { name: "Nykaa",      Logo: NykaaLogo },
+  { name: "Meesho",     Logo: MeeshoLogo },
+  { name: "Blinkit",    Logo: BlinkitLogo },
+  { name: "Myntra",     Logo: MyntraLogo },
+  { name: "Dunzo",      Logo: DunzoLogo },
+];
 
   const stats = [
     { icon: TrendingUp, value: 10000000, suffix: '+', label: 'Bags Delivered', color: 'from-green-400 to-emerald-500', key: 'bags' },
@@ -1677,131 +1769,120 @@ export default function HomePage() {
       
 
       {/* ── How It Works ── */}
-      <motion.section
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}
-        viewport={{ once: true, amount: 0.2 }}
-        className="py-16 px-4 sm:px-6 lg:px-8 bg-white"
-      >
-        <motion.div {...fadeInUp} viewport={{ once: true }} className="max-w-7xl mx-auto text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">From production to disposal, our eco-friendly bags are designed for sustainability at every step.</p>
-        </motion.div>
-        <motion.div
-          variants={staggerContainer} initial="initial" whileInView="whileInView"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto"
-        >
-          {[
-            { icon: Leaf, title: 'Sustainable Materials', desc: 'Made from 100% biodegradable materials, reducing plastic waste.', color: 'from-green-400 to-emerald-500', number: '01' },
-            { icon: Recycle, title: 'Eco-Friendly Manufacturing', desc: 'Low carbon footprint and environmentally responsible production.', color: 'from-emerald-400 to-teal-500', number: '02' },
-            { icon: CheckCircle, title: 'End-of-Life Disposal', desc: 'Compostable or reusable bags that minimize waste.', color: 'from-teal-400 to-cyan-500', number: '03' },
-          ].map((step, idx) => (
-            <motion.div
-              key={idx} variants={fadeInUp}
-              className="group relative text-center p-8 bg-green-50 rounded-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 cursor-pointer"
-            >
-              <div className={`absolute inset-0 bg-gradient-to-br ${step.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-              <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-green-400/50 transition-all duration-500" />
-              <div className="absolute top-4 right-4 text-6xl font-bold text-green-200/30 group-hover:text-green-300/50 transition-colors duration-500">{step.number}</div>
-              <div className="relative inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 group-hover:bg-white group-hover:shadow-lg">
-                <div className={`absolute inset-0 bg-gradient-to-br ${step.color} opacity-0 group-hover:opacity-20 rounded-full transition-opacity duration-500`} />
-                <step.icon className="relative h-10 w-10 text-green-600 group-hover:text-green-700 transition-colors duration-300" />
-              </div>
-              <div className="relative">
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-green-700 transition-colors duration-300">{step.title}</h3>
-                <p className="text-gray-600 group-hover:text-gray-800 transition-colors duration-300">{step.desc}</p>
-              </div>
-              <div className={`absolute -bottom-10 -left-10 w-24 h-24 bg-gradient-to-br ${step.color} rounded-full opacity-0 group-hover:opacity-20 blur-2xl transition-all duration-700`} />
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-green-200">
-                <div className={`h-full bg-gradient-to-r ${step.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left`} />
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.section>
+     {/* ── How It Works ── */}
+<motion.section
+  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}
+  viewport={{ once: true, amount: 0.2 }}
+  className="py-24 px-4 sm:px-6 lg:px-8 bg-white"
+>
+  <div className="max-w-7xl mx-auto">
+    <motion.div {...fadeInUp} viewport={{ once: true }} className="text-center mb-20">
+      <span className="text-xs font-bold tracking-[0.25em] text-emerald-600 uppercase mb-3 block">Our Process</span>
+      <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">How It Works</h2>
+      <p className="text-gray-500 max-w-xl mx-auto">From plant to package to compost — every step is designed with the planet in mind.</p>
+    </motion.div>
 
-      {/* ── Why Choose Us — Comparison Table ── */}
-      {/* <motion.section
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}
-        viewport={{ once: true, amount: 0.2 }}
-        className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50"
-      >
-        <div className="max-w-5xl mx-auto">
-          <motion.div {...fadeInUp} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Why Make the Switch?</h2>
-            <p className="text-lg text-gray-600">See how our bags compare to conventional plastic</p>
-          </motion.div>
-          <div className="overflow-x-auto rounded-2xl shadow-lg">
-            <table className="w-full bg-white">
-              <thead>
-                <tr>
-                  <th className="p-4 text-left text-gray-600 font-semibold bg-gray-50">Feature</th>
-                  <th className="p-4 text-center bg-green-600 text-white font-bold text-lg">🌿 Bag a Soil</th>
-                  <th className="p-4 text-center bg-gray-200 text-gray-600 font-semibold">🛢️ Regular Plastic</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { feature: 'Decomposition Time', ours: '90–180 days', theirs: '500–1000 years' },
-                  { feature: 'Made from', ours: 'Plant-based materials', theirs: 'Fossil fuels' },
-                  { feature: 'Toxic Residue', ours: '❌ None', theirs: '☠️ Yes' },
-                  { feature: 'Customizable', ours: '✅ Yes', theirs: '✅ Yes' },
-                  { feature: 'Carbon Footprint', ours: '90% lower', theirs: 'High' },
-                  { feature: 'Compostable', ours: '✅ Yes', theirs: '❌ No' },
-                  { feature: 'Government Compliant', ours: '✅ CPCB Approved', theirs: '⚠️ Banned in India' },
-                ].map((row, idx) => (
-                  <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                    <td className="p-4 font-medium text-gray-700">{row.feature}</td>
-                    <td className="p-4 text-center text-green-700 font-semibold bg-green-50">{row.ours}</td>
-                    <td className="p-4 text-center text-gray-500">{row.theirs}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+      {/* Connector line (desktop) */}
+      <div className="hidden md:block absolute top-16 left-[20%] right-[20%] h-px bg-gradient-to-r from-green-300 via-emerald-400 to-teal-300" />
+
+      {[
+        { icon: Leaf, title: 'Sustainable Materials', desc: 'Sourced from certified organic farms. 100% plant-based, verified compostable, zero synthetic additives.', color: 'from-green-400 to-emerald-500', light: 'bg-green-50', ring: 'ring-green-200', number: '01', iconColor: 'text-green-600' },
+        { icon: Recycle, title: 'Eco Manufacturing', desc: 'Produced with 90% lower carbon emissions than conventional plastic. Responsible from start to finish.', color: 'from-emerald-400 to-teal-500', light: 'bg-emerald-50', ring: 'ring-emerald-200', number: '02', iconColor: 'text-emerald-600' },
+        { icon: CheckCircle, title: 'End-of-Life Disposal', desc: 'Fully compostable in 90–180 days. No microplastics, no toxic residue — just clean organic matter.', color: 'from-teal-400 to-cyan-500', light: 'bg-teal-50', ring: 'ring-teal-200', number: '03', iconColor: 'text-teal-600' },
+      ].map((step, idx) => (
+        <motion.div
+          key={idx}
+          initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: idx * 0.15 }} viewport={{ once: true }}
+          className="group relative text-center"
+        >
+          {/* Step number badge */}
+          <div className="relative inline-flex mb-8">
+            <div className={`w-14 h-14 ${step.light} ${step.ring} ring-2 rounded-2xl flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 relative z-10`}>
+              <step.icon className={`w-7 h-7 ${step.iconColor}`} />
+            </div>
+            <span className="absolute -top-3 -right-4 text-xs font-black text-gray-300 group-hover:text-green-400 transition-colors duration-300 leading-none">{step.number}</span>
           </div>
-        </div>
-      </motion.section> */}
+
+          <h3 className="text-xl font-extrabold text-gray-900 mb-3 group-hover:text-green-700 transition-colors duration-300">
+            {step.title}
+          </h3>
+          <p className="text-gray-500 leading-relaxed text-sm max-w-xs mx-auto">{step.desc}</p>
+
+          {/* Bottom bar */}
+          <div className="mt-6 mx-auto h-1 w-8 rounded-full bg-gray-200 overflow-hidden">
+            <div className={`h-full bg-gradient-to-r ${step.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+          </div>
+
+          {/* Subtle bg fill on hover */}
+          <div className={`absolute inset-0 -mx-4 -my-6 rounded-2xl bg-gradient-to-br ${step.color} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500 -z-10`} />
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</motion.section>
+  
 
       {/* ── How to Order ── */}
-      <motion.section
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}
-        viewport={{ once: true, amount: 0.2 }}
-        className="py-16 px-4 sm:px-6 lg:px-8 bg-white"
+      {/* ── How to Order ── */}
+<motion.section
+  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}
+  viewport={{ once: true, amount: 0.2 }}
+  className="py-24 px-4 sm:px-6 lg:px-8 bg-white"
+>
+  <div className="max-w-5xl mx-auto">
+    <motion.div {...fadeInUp} viewport={{ once: true }} className="text-center mb-16">
+      <span className="text-xs font-bold tracking-[0.25em] text-emerald-600 uppercase mb-3 block">Simple Process</span>
+      <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">How to Order</h2>
+      <p className="text-gray-500">Get your custom eco bags in 4 simple steps</p>
+    </motion.div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-12">
+      {[
+        { step: '01', icon: '📋', title: 'Request a Quote', desc: 'Fill our quick form with bag type, quantity, and design requirements. Takes under 2 minutes.', color: 'from-green-400 to-emerald-500', border: 'border-green-200 hover:border-green-400', bg: 'hover:bg-green-50' },
+        { step: '02', icon: '💬', title: 'Get Custom Pricing', desc: 'Our team reviews your needs and sends a detailed quote within 24 hours — zero hidden charges.', color: 'from-emerald-400 to-teal-500', border: 'border-emerald-200 hover:border-emerald-400', bg: 'hover:bg-emerald-50' },
+        { step: '03', icon: '🎨', title: 'Approve Your Design', desc: 'We share a digital proof. One approval click and production kicks off immediately.', color: 'from-teal-400 to-cyan-500', border: 'border-teal-200 hover:border-teal-400', bg: 'hover:bg-teal-50' },
+        { step: '04', icon: '🚚', title: 'Pan India Delivery', desc: 'Delivered with real-time tracking, GST invoice, and dedicated post-order support.', color: 'from-green-500 to-emerald-600', border: 'border-green-200 hover:border-green-500', bg: 'hover:bg-green-50' },
+      ].map((step, idx) => (
+        <motion.div
+          key={idx}
+          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: idx * 0.1 }} viewport={{ once: true }}
+          className={`group relative flex gap-5 p-6 rounded-2xl border ${step.border} ${step.bg} transition-all duration-300 hover:shadow-lg`}
+        >
+          {/* Step number + icon */}
+          <div className="flex-shrink-0 flex flex-col items-center gap-1">
+            <div className="text-3xl group-hover:scale-125 transition-transform duration-300">{step.icon}</div>
+            <span className="text-[10px] font-black text-gray-300 tracking-widest">{step.step}</span>
+          </div>
+
+          {/* Divider */}
+          <div className={`w-px self-stretch bg-gradient-to-b ${step.color} opacity-30 group-hover:opacity-70 transition-opacity duration-300`} />
+
+          {/* Content */}
+          <div className="flex-1">
+            <h3 className="font-extrabold text-gray-900 mb-1.5 group-hover:text-green-700 transition-colors duration-300">
+              {step.title}
+            </h3>
+            <p className="text-gray-500 text-sm leading-relaxed">{step.desc}</p>
+          </div>
+
+          <ArrowRight className="w-4 h-4 text-green-400 flex-shrink-0 self-center opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
+        </motion.div>
+      ))}
+    </div>
+
+    <div className="text-center">
+      <button
+        onClick={() => navigate('/contact')}
+        className="px-10 py-4 bg-green-600 text-white rounded-xl font-bold text-lg hover:bg-green-700 transition-all duration-300 shadow-lg shadow-green-200 hover:shadow-green-300 hover:scale-105"
       >
-        <div className="max-w-7xl mx-auto">
-          <motion.div {...fadeInUp} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">How to Order</h2>
-            <p className="text-lg text-gray-600">Get your custom eco bags in 4 simple steps</p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-            {[
-              { step: '01', icon: '📋', title: 'Request a Quote', desc: 'Fill our quick form with your bag type, quantity, and design requirements.', color: 'from-green-400 to-emerald-500' },
-              { step: '02', icon: '💬', title: 'Get a Custom Quote', desc: 'Our team reviews your needs and sends a detailed price quote within 24hrs.', color: 'from-emerald-400 to-teal-500' },
-              { step: '03', icon: '🎨', title: 'Approve Design', desc: 'We share a digital proof. You approve and we start production immediately.', color: 'from-teal-400 to-cyan-500' },
-              { step: '04', icon: '🚚', title: 'Fast Delivery', desc: 'Your eco bags delivered Pan India with real-time tracking and GST invoice.', color: 'from-green-500 to-emerald-600' },
-            ].map((step, idx) => (
-              <motion.div key={idx} variants={fadeInUp} className="group flex flex-col items-center text-center">
-                <div className={`relative w-16 h-16 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center text-2xl mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  {step.icon}
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full border-2 border-green-500 flex items-center justify-center">
-                    <span className="text-xs font-bold text-green-600">{idx + 1}</span>
-                  </div>
-                </div>
-                <h3 className="font-bold text-gray-900 mb-2 text-lg">{step.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-          <div className="text-center mt-10">
-            <button
-              onClick={() => navigate('/contact')}
-              className="px-8 py-4 bg-green-600 text-white rounded-xl font-bold text-lg hover:bg-green-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-            >
-              Start Your Order →
-            </button>
-          </div>
-        </div>
-      </motion.section>
+        Start Your Order →
+      </button>
+    </div>
+  </div>
+</motion.section>
 
       {/* ── Environmental Impact ── */}
       <section
@@ -1885,63 +1966,65 @@ export default function HomePage() {
     
      
       {/* ── Greening Live Events ── */}
-      <motion.section
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}
-        viewport={{ once: true, amount: 0.2 }}
-        className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-green-50 to-emerald-100"
+<motion.section
+  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}
+  viewport={{ once: true, amount: 0.2 }}
+  className="relative min-h-[80vh] flex items-center overflow-hidden"
+>
+  <div className="absolute inset-0">
+    <img
+      src="https://res.cloudinary.com/dqir5enfp/image/upload/v1760545046/public-concert_xzfkaa.png"
+      alt="Concert"
+      className="w-full h-full object-cover"
+    />
+    <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-transparent" />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+  </div>
+  <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <motion.div
+      initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.8 }} viewport={{ once: true }}
+    >
+      <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/20 border border-emerald-500/40 rounded-full mb-6">
+        <Leaf className="w-4 h-4 text-emerald-400" />
+        <span className="text-sm text-emerald-400 font-semibold">Sustainable Events</span>
+      </div>
+      <h2 className="text-4xl sm:text-5xl font-black text-white leading-tight mb-6">
+        Greening the<br /><span className="text-emerald-400">Live Experience</span>
+      </h2>
+      <p className="text-gray-300 leading-relaxed mb-4 text-lg">
+        Every concert generates thousands of single-use plastic bags. We're changing that — 100% biodegradable bags that decompose in months, not centuries.
+      </p>
+      <p className="text-gray-400 leading-relaxed mb-10">
+        From merchandise to food packaging, our plant-based materials break down into organic matter with zero toxic residue.
+      </p>
+      <button
+        onClick={() => navigate('/contact')}
+        className="px-8 py-4 bg-emerald-500 text-white rounded-xl font-bold hover:bg-emerald-400 transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:scale-105"
       >
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white rounded-lg overflow-hidden">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }} viewport={{ once: true }}
-              className="relative h-96 lg:h-auto overflow-hidden group"
-            >
-              <img
-                src="https://res.cloudinary.com/dqir5enfp/image/upload/v1760545046/public-concert_xzfkaa.png"
-                alt="Concert crowd"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/90 backdrop-blur-sm rounded-full mb-3">
-                  <Leaf className="w-4 h-4 text-white" />
-                  <span className="text-sm text-white font-semibold">Sustainable Events</span>
-                </div>
-                <h3 className="text-white text-2xl font-bold drop-shadow-lg">Making Every Concert Count</h3>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }} viewport={{ once: true }}
-              className="bg-gradient-to-br from-green-50 to-emerald-50 p-10 lg:p-12 flex flex-col justify-center"
-            >
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
-                Greening the <span className="text-green-600">Live Experience</span>
-              </h2>
-              <p className="text-gray-700 mb-4">
-                Every concert, festival, and live event generates thousands of single-use plastic bags. We're changing that narrative by providing 100% biodegradable bags that decompose naturally within months, not centuries.
-              </p>
-              <p className="text-gray-700 mb-6">
-                From merchandise bags to food packaging, our plant-based materials break down into organic matter, leaving zero toxic residue.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { value: '90%', label: 'Less Carbon Footprint' },
-                  { value: '180', label: 'Days to Decompose' },
-                  { value: '500+', label: 'Events Served' },
-                  { value: '100%', label: 'Compostable' },
-                ].map((s, i) => (
-                  <div key={i} className="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
-                    <div className="text-3xl font-bold text-green-600 mb-1">{s.value}</div>
-                    <div className="text-sm text-gray-600">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
+        Partner With Us →
+      </button>
+    </motion.div>
+    <motion.div
+      initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.8, delay: 0.2 }} viewport={{ once: true }}
+      className="grid grid-cols-2 gap-4"
+    >
+      {[
+        { value: '90%', label: 'Less Carbon', sub: 'vs conventional plastic' },
+        { value: '180', label: 'Days to Decompose', sub: 'not 500 years' },
+        { value: '500+', label: 'Events Served', sub: 'across India' },
+        { value: '100%', label: 'Compostable', sub: 'certified & verified' },
+      ].map((s, i) => (
+        <div key={i} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300">
+          <div className="text-4xl font-black text-emerald-400 mb-1">{s.value}</div>
+          <div className="text-white font-bold text-sm mb-1">{s.label}</div>
+          <div className="text-gray-500 text-xs">{s.sub}</div>
         </div>
-      </motion.section>
+      ))}
+    </motion.div>
+  </div>
+</motion.section>
 
       {/* ── FAQ ── */}
       <motion.section
@@ -2014,112 +2097,143 @@ export default function HomePage() {
       </motion.section>
 
       {/* ── Newsletter ── */}
-      <motion.section
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}
-        viewport={{ once: true, amount: 0.2 }}
-        className="py-16 px-4 sm:px-6 lg:px-8 bg-white"
-      >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }} viewport={{ once: true }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 md:p-12 text-center">
-            <Mail className="h-12 w-12 text-green-600 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Join Our Green Community</h2>
-            <p className="text-lg text-gray-600 mb-6">Get exclusive updates on sustainability and eco-innovations</p>
-            <form onSubmit={handleNewsletterSignup} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
-              <input
-                type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email" required
-                className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-              <button
-                type="submit" disabled={newsletterStatus === 'loading'}
-                className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50"
-              >
-                {newsletterStatus === 'loading' ? 'Subscribing...' : 'Subscribe'}
-              </button>
-            </form>
-            {newsletterStatus === 'success' && (
-              <div className="mt-4 flex items-center justify-center text-green-600">
-                <CheckCircle className="h-5 w-5 mr-2" /><span>Successfully subscribed!</span>
-              </div>
-            )}
-            {newsletterStatus === 'error' && (
-              <p className="mt-4 text-red-600">Already subscribed or an error occurred</p>
-            )}
+     {/* ── Newsletter ── */}
+<motion.section
+  initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}
+  viewport={{ once: true, amount: 0.2 }}
+  className="py-24 px-4 sm:px-6 lg:px-8 bg-white"
+>
+  <motion.div
+    initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.6 }} viewport={{ once: true }}
+    className="max-w-4xl mx-auto"
+  >
+    <div className="relative bg-gradient-to-br from-green-50 to-emerald-50 rounded-3xl p-10 md:p-14 border border-green-100 overflow-hidden">
+      {/* Decorative blobs */}
+      <div className="absolute -top-10 -right-10 w-48 h-48 bg-emerald-200/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-green-200/30 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative z-10 text-center">
+        <div className="inline-flex items-center justify-center w-14 h-14 bg-green-100 rounded-2xl mb-6">
+          <Mail className="h-7 w-7 text-green-600" />
+        </div>
+        <span className="text-xs font-bold tracking-[0.25em] text-emerald-600 uppercase mb-3 block">Newsletter</span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3">Join Our Green Community</h2>
+        <p className="text-gray-500 mb-8 max-w-md mx-auto">
+          Sustainability insights, product launches, and eco-innovations — straight to your inbox.
+        </p>
+
+        <form onSubmit={handleNewsletterSignup} className="max-w-md mx-auto">
+          <div className="flex flex-col sm:flex-row gap-3 bg-white rounded-2xl p-2 shadow-md border border-green-100">
+            <input
+              type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email address" required
+              className="flex-1 px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none text-sm bg-transparent"
+            />
+            <button
+              type="submit" disabled={newsletterStatus === 'loading'}
+              className="px-6 py-2.5 bg-green-600 text-white rounded-xl font-bold text-sm hover:bg-green-700 transition-all duration-300 disabled:opacity-50 whitespace-nowrap shadow-sm hover:shadow-md hover:scale-[1.02]"
+            >
+              {newsletterStatus === 'loading' ? 'Joining...' : 'Subscribe →'}
+            </button>
           </div>
-        </motion.div>
-      </motion.section>
+          <p className="text-gray-400 text-xs mt-3">No spam. Unsubscribe anytime.</p>
+        </form>
+
+        {newsletterStatus === 'success' && (
+          <div className="mt-5 inline-flex items-center gap-2 px-5 py-3 bg-green-100 text-green-700 rounded-xl font-bold text-sm">
+            <CheckCircle className="h-5 w-5" /> You're in! Welcome to the community.
+          </div>
+        )}
+        {newsletterStatus === 'error' && (
+          <p className="mt-4 text-red-500 text-sm">Already subscribed or something went wrong — try again.</p>
+        )}
+      </div>
+    </div>
+  </motion.div>
+</motion.section>
 
       {/* ── Trusted By ── */}
-      <motion.section
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8 }}
-        viewport={{ once: true, amount: 0.2 }}
-        className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-green-50 to-emerald-50 overflow-hidden"
-      >
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-green-200/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl" />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto">
-          <motion.div {...fadeInUp} viewport={{ once: true }} className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full mb-6 shadow-sm">
-              <Heart className="w-5 h-5 text-green-600 animate-pulse" />
-              <span className="text-sm font-semibold text-green-700 uppercase tracking-wide">Partners in Sustainability</span>
+     <motion.section
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true, amount: 0.2 }}
+      className="relative py-20 bg-gradient-to-br from-gray-50 via-green-50 to-emerald-50 overflow-hidden"
+    >
+      {/* Background blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-green-200/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div {...fadeInUp} viewport={{ once: true }} className="text-center mb-16 px-4">
+          <div className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full mb-6 shadow-sm">
+            <Heart className="w-5 h-5 text-green-600 animate-pulse" />
+            <span className="text-sm font-semibold text-green-700 uppercase tracking-wide">
+              Partners in Sustainability
+            </span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-900 via-green-800 to-emerald-900 bg-clip-text text-transparent mb-4">
+            Trusted By Industry Leaders
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Join thousands of forward-thinking businesses making the switch to sustainable packaging
+          </p>
+        </motion.div>
+
+        {/* ── Infinite Slideshow ── */}
+       {/* ── Infinite Slideshow ── */}
+<div className="relative overflow-hidden py-4 [mask-image:linear-gradient(to_right,transparent,white_12%,white_88%,transparent)]">
+  <div className="flex gap-5 w-max animate-[slide_24s_linear_infinite] hover:[animation-play-state:paused]">
+    {[...logos, ...logos].map((logo, idx) => {
+      const { Logo } = logo;   // ✅ destructure as component
+      return (
+        <div
+          key={idx}
+          className="group relative flex-shrink-0 w-40 bg-white rounded-2xl p-5 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:scale-105 cursor-pointer border border-black/5"
+        >
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-24 h-12 flex items-center justify-center">
+              <Logo />   {/* ✅ render as component */}
             </div>
-            <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-900 via-green-800 to-emerald-900 bg-clip-text text-transparent mb-4">
-              Trusted By Industry Leaders
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Join thousands of forward-thinking businesses making the switch to sustainable packaging
-            </p>
-          </motion.div>
-          <motion.div
-            variants={staggerContainer} initial="initial" whileInView="whileInView"
-            viewport={{ once: true, amount: 0.2 }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12"
-          >
-            {logos.map((logo, idx) => {
-              const Icon = logo.icon;
-              return (
-                <motion.div
-                  key={idx} variants={fadeInUp}
-                  className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${logo.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500`} />
-                  <div className="relative flex flex-col items-center justify-center">
-                    <div className={`mb-4 p-4 bg-gradient-to-br ${logo.color} rounded-xl shadow-md group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
-                      <Icon className="w-10 h-10 text-white" />
-                    </div>
-                    <span className="text-sm font-medium text-gray-700 text-center group-hover:text-gray-900 transition-colors">{logo.name}</span>
-                  </div>
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <Award className="w-5 h-5 text-green-500" />
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-          <motion.div
-            variants={staggerContainer} initial="initial" whileInView="whileInView"
-            viewport={{ once: true, amount: 0.2 }}
-            className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6"
-          >
-            {[
-              { value: '500+', label: 'Partner Companies', color: 'text-green-600' },
-              { value: '50+', label: 'Cities Across India', color: 'text-emerald-600' },
-              { value: '98%', label: 'Customer Satisfaction', color: 'text-teal-600' },
-            ].map((s, i) => (
-              <motion.div key={i} variants={fadeInUp} className="text-center p-6 bg-white/60 backdrop-blur-sm rounded-xl">
-                <div className={`text-3xl font-bold ${s.color} mb-2`}>{s.value}</div>
-                <div className="text-sm text-gray-600">{s.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+            <span className="text-xs font-semibold text-gray-600 text-center">
+              {logo.name}
+            </span>
+          </div>
         </div>
-      </motion.section>
+      );
+    })}
+  </div>
+</div>
+
+        {/* Stats */}
+        <motion.div
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 px-4"
+        >
+          {[
+            { value: "0+", label: "Partner Companies",   color: "text-green-600" },
+            { value: "50+",  label: "Cities Across India", color: "text-emerald-600" },
+            { value: "98%",  label: "Customer Satisfaction", color: "text-teal-600" },
+          ].map((s, i) => (
+            <motion.div
+              key={i}
+              {...fadeInUp}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="text-center p-6 bg-white/60 backdrop-blur-sm rounded-xl"
+            >
+              <div className={`text-3xl font-bold ${s.color} mb-2`}>{s.value}</div>
+              <div className="text-sm text-gray-600">{s.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </motion.section>
 
       {/* ── Footer ── */}
      

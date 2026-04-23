@@ -272,7 +272,7 @@ export default function SignupPage() {
                   onChange={(e) => setFullName(e.target.value)}
                   required
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                  placeholder="John Doe"
+                  placeholder="your name"
                 />
               </div>
             </div>

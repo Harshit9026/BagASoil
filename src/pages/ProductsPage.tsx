@@ -438,24 +438,7 @@ import { supabase } from '../lib/supabase';
 import { Leaf, Facebook, Twitter, Instagram, Linkedin, MapPin, Phone, ArrowRight, Mail, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  base_price: number;
-  images: string[];
-  sizes: Array<{ name: string; price: number }>;
-  colors: string[];
-  biodegradable_grade: string;
-  features: string[];
-  customizable: boolean;
-  in_stock: boolean;
-  min_order_quantity: number;
-  category?: string;
-}
-
-// ← Demo products with categories (replace image URLs with your Cloudinary ones later)
-const DEMO_PRODUCTS: Product[] = [
+const DEMO_PRODUCTS = [
   {
     id: '1', name: 'Standard Carry Bag', description: 'Lightweight biodegradable carry bag for everyday use. Perfect for grocery stores and retail shops.',
     base_price: 150, images: ['https://res.cloudinary.com/dqir5enfp/image/upload/v1760362990/WhatsApp_Image_2025-10-13_at_17.48.44_abebdf48_vxfjth.jpg'],
@@ -466,7 +449,7 @@ const DEMO_PRODUCTS: Product[] = [
   },
   {
     id: '2', name: 'Heavy Duty Carry Bag', description: 'Extra strong carry bags for heavier loads. Ideal for supermarkets and bulk shopping.',
-    base_price: 200, images: ['https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600'],
+    base_price: 200, images: ['https://res.cloudinary.com/dqir5enfp/image/upload/v1776930082/b1_r1j5x1.avif'],
     sizes: [{ name: 'Medium', price: 180 }, { name: 'Large', price: 220 }, { name: 'XL', price: 280 }],
     colors: ['White', 'Black', 'Blue'], biodegradable_grade: 'Grade A Compostable',
     features: ['Heavy Duty', 'Tear Resistant', 'Eco Certified'],
@@ -474,7 +457,7 @@ const DEMO_PRODUCTS: Product[] = [
   },
   {
     id: '3', name: 'Retail Shopping Bag', description: 'Premium shopping bags for retail stores with glossy finish and strong handles.',
-    base_price: 250, images: ['https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600'],
+    base_price: 250, images: ['https://res.cloudinary.com/dqir5enfp/image/upload/v1776930097/b2_vu9riw.jpg'],
     sizes: [{ name: 'Small', price: 200 }, { name: 'Medium', price: 250 }, { name: 'Large', price: 320 }],
     colors: ['White', 'Kraft Brown', 'Custom'], biodegradable_grade: 'Grade A Compostable',
     features: ['Premium Finish', 'Strong Handles', 'Brand Printing'],
@@ -482,7 +465,7 @@ const DEMO_PRODUCTS: Product[] = [
   },
   {
     id: '4', name: 'Luxury Shopping Bag', description: 'High-end biodegradable bags for boutiques, jewelry stores and premium brands.',
-    base_price: 400, images: ['https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=600'],
+    base_price: 400, images: ['https://res.cloudinary.com/dqir5enfp/image/upload/v1776930109/b3_l5zfdf.jpg'],
     sizes: [{ name: 'Small', price: 350 }, { name: 'Medium', price: 400 }, { name: 'Large', price: 500 }],
     colors: ['Black', 'White', 'Gold'], biodegradable_grade: 'Grade A Compostable',
     features: ['Luxury Finish', 'Ribbon Handles', 'Gift Ready'],
@@ -490,7 +473,7 @@ const DEMO_PRODUCTS: Product[] = [
   },
   {
     id: '5', name: 'Kitchen Garbage Bag', description: 'Compostable kitchen garbage bags that break down naturally within 180 days.',
-    base_price: 120, images: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600'],
+    base_price: 120, images: ['https://res.cloudinary.com/dqir5enfp/image/upload/v1776930122/b4_qm24be.jpg'],
     sizes: [{ name: 'Small (5L)', price: 80 }, { name: 'Medium (10L)', price: 120 }, { name: 'Large (20L)', price: 180 }],
     colors: ['Green', 'Black'], biodegradable_grade: 'Grade B Compostable',
     features: ['Leak Proof', 'Compostable in 180 days', 'Odor Resistant'],
@@ -498,7 +481,7 @@ const DEMO_PRODUCTS: Product[] = [
   },
   {
     id: '6', name: 'Industrial Waste Bag', description: 'Large capacity biodegradable bags for industrial and commercial waste management.',
-    base_price: 300, images: ['https://images.unsplash.com/photo-1605600659908-0ef719419d41?w=600'],
+    base_price: 300, images: ['https://res.cloudinary.com/dqir5enfp/image/upload/v1776930135/b5_txtgkp.jpg'],
     sizes: [{ name: 'Large (50L)', price: 250 }, { name: 'XL (100L)', price: 350 }],
     colors: ['Black', 'Green'], biodegradable_grade: 'Grade B Compostable',
     features: ['High Capacity', 'Puncture Resistant', 'Industrial Grade'],
@@ -506,7 +489,7 @@ const DEMO_PRODUCTS: Product[] = [
   },
   {
     id: '7', name: 'Custom Branded Bag', description: 'Fully customizable bags with your brand logo, colors and design. Perfect for corporate gifting.',
-    base_price: 500, images: ['https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600'],
+    base_price: 500, images: ['https://res.cloudinary.com/dqir5enfp/image/upload/v1776930147/b6_xajjgf.jpg'],
     sizes: [{ name: 'Any Size', price: 0 }],
     colors: ['Any Color'], biodegradable_grade: 'Grade A Compostable',
     features: ['Custom Logo', 'Any Color', 'Any Size', 'Free Design Support', 'Sample Available'],
@@ -514,7 +497,7 @@ const DEMO_PRODUCTS: Product[] = [
   },
   {
     id: '8', name: 'Event & Gift Bag', description: 'Custom biodegradable bags for events, weddings, corporate functions and gifting.',
-    base_price: 350, images: ['https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600'],
+    base_price: 350, images: ['https://res.cloudinary.com/dqir5enfp/image/upload/v1776930159/b7_aow9ur.jpg'],
     sizes: [{ name: 'Small', price: 300 }, { name: 'Medium', price: 380 }, { name: 'Large', price: 450 }],
     colors: ['Custom'], biodegradable_grade: 'Grade A Compostable',
     features: ['Event Branding', 'Premium Feel', 'Bulk Discounts'],
@@ -522,7 +505,7 @@ const DEMO_PRODUCTS: Product[] = [
   },
   {
     id: '9', name: 'Bulk Carry Bag Pack', description: 'Economical bulk packs of carry bags for distributors and wholesalers.',
-    base_price: 5000, images: ['https://images.unsplash.com/photo-1580910051074-3eb694886505?w=600'],
+    base_price: 5000, images: ['https://res.cloudinary.com/dqir5enfp/image/upload/v1776930172/b8_xpnxid.jpg'],
     sizes: [{ name: '500 pcs', price: 4500 }, { name: '1000 pcs', price: 8000 }, { name: '5000 pcs', price: 35000 }],
     colors: ['White', 'Brown'], biodegradable_grade: 'Grade A Compostable',
     features: ['Wholesale Price', 'Bulk Discount', 'Fast Delivery'],
@@ -530,7 +513,7 @@ const DEMO_PRODUCTS: Product[] = [
   },
   {
     id: '10', name: 'Bulk Shopping Bag Pack', description: 'Wholesale shopping bags for retailers. Best price per unit on large orders.',
-    base_price: 8000, images: ['https://images.unsplash.com/photo-1544816155-12df9643f363?w=600'],
+    base_price: 8000, images: ['https://res.cloudinary.com/dqir5enfp/image/upload/v1776930394/b9_hg2fnr.jpg'],
     sizes: [{ name: '500 pcs', price: 7500 }, { name: '1000 pcs', price: 14000 }],
     colors: ['White', 'Kraft'], biodegradable_grade: 'Grade A Compostable',
     features: ['Wholesale Rate', 'GST Invoice', 'Pan India Delivery'],
@@ -541,11 +524,11 @@ const DEMO_PRODUCTS: Product[] = [
 const CATEGORIES = ['All', 'Carry Bags', 'Shopping Bags', 'Garbage Bags', 'Custom Bags', 'Bulk Orders'];
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const navigate = useNavigate();
 
@@ -562,7 +545,6 @@ export default function ProductsPage() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      // Use DB products if available, else show demo products
       setProducts(data && data.length > 0 ? data : DEMO_PRODUCTS);
     } catch (error) {
       console.error('Error loading products:', error);
@@ -573,7 +555,8 @@ export default function ProductsPage() {
   };
 
   const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch =
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.description?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
@@ -592,16 +575,235 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-green-600 to-emerald-700 py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Our Products</h1>
-          <p className="text-lg text-green-50 max-w-2xl mx-auto">
+
+      {/* ── Global Keyframes ── */}
+      <style>{`
+        /* Ken-Burns slow zoom on the bg image */
+        @keyframes kb-zoom {
+          0%   { transform: scale(1.08) translate(0px, 0px); }
+          33%  { transform: scale(1.13) translate(-8px, -4px); }
+          66%  { transform: scale(1.10) translate(6px,  6px); }
+          100% { transform: scale(1.08) translate(0px, 0px); }
+        }
+        .kb-zoom { animation: kb-zoom 18s ease-in-out infinite; }
+
+        /* Spinning rings */
+        @keyframes spin-cw  { from { transform: rotate(0deg);    } to { transform: rotate(360deg);  } }
+        @keyframes spin-ccw { from { transform: rotate(0deg);    } to { transform: rotate(-360deg); } }
+
+        /* Floating badge / icon */
+        @keyframes float-up { 0%,100%{transform:translateY(0) rotate(0deg) scale(1)} 50%{transform:translateY(-20px) rotate(6deg) scale(1.04)} }
+        @keyframes float-dn { 0%,100%{transform:translateY(0) rotate(0deg) scale(1)} 50%{transform:translateY(16px) rotate(-5deg) scale(0.97)} }
+
+        /* Pulse opacity */
+        @keyframes pulse-op { 0%,100%{opacity:0.30} 50%{opacity:0.35} }
+
+        /* Twinkle */
+        @keyframes twinkle  { 0%,100%{opacity:0.15} 50%{opacity:0.30} }
+
+        /* Shimmer text highlight */
+        @keyframes shimmer  { 0%{background-position:200% center} 100%{background-position:-200% center} }
+
+        /* Glowing border pulse on hero badge */
+        @keyframes glow-ring { 0%,100%{box-shadow:0 0 0 0 rgba(134,239,172,0.4)} 50%{box-shadow:0 0 0 10px rgba(134,239,172,0)} }
+
+        .h-float-a { animation: float-up 7s ease-in-out infinite; }
+        .h-float-b { animation: float-dn 9s ease-in-out infinite; }
+        .h-float-c { animation: float-up 6s ease-in-out infinite 1.5s; }
+        .h-float-d { animation: float-dn 8s ease-in-out infinite 3s; }
+        .h-pulse    { animation: pulse-op 4s ease-in-out infinite; }
+        .h-pulse2   { animation: pulse-op 5s ease-in-out infinite 1s; }
+        .h-twinkle  { animation: twinkle  2.5s ease-in-out infinite; }
+
+        .shimmer-text {
+          background: linear-gradient(90deg, #fff 0%, #bbf7d0 40%, #fff 60%, #bbf7d0 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: shimmer 4s linear infinite;
+        }
+
+        .hero-badge { animation: glow-ring 2.5s ease-in-out infinite; }
+
+        /* Scrollbar hide for category pills */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
+
+      {/* ══════════════════════════════════════
+          HERO SECTION
+      ══════════════════════════════════════ */}
+      <div className="relative overflow-hidden" style={{ minHeight: '360px' }}>
+
+        {/* 1. Background image — Ken Burns slow zoom + blur + dim */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div
+            className="kb-zoom absolute inset-0"
+            style={{
+              backgroundImage: 'url(/biodegradable-product-images.webp)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              filter: 'blur(3px) brightness(0.45)',
+              transform: 'scale(1.08)',
+            }}
+          />
+        </div>
+
+        {/* 2. SVG animated decorations layer */}
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1400 360"
+          preserveAspectRatio="xMidYMid slice"
+          style={{ zIndex: 1 }}
+        >
+          {/* ── LEFT BADGE SEAL ── */}
+          <g className="h-float-a" style={{ transformOrigin: '115px 180px' }}>
+            <circle cx="115" cy="180" r="110" fill="none" stroke="rgba(255,255,255,0.28)" strokeWidth="1.8"
+              strokeDasharray="14 9"
+              style={{ animation: 'spin-cw 16s linear infinite', transformOrigin: '115px 180px' }} />
+            <circle cx="115" cy="180" r="82" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.40)" strokeWidth="1.8"
+              style={{ animation: 'spin-ccw 11s linear infinite', transformOrigin: '115px 180px' }} />
+            <circle cx="115" cy="180" r="56" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.32)" strokeWidth="1.4" />
+            <polygon points="115,138 125,164 156,164 132,181 141,207 115,190 89,207 98,181 74,164 105,164"
+              fill="rgba(255,255,255,0.45)" stroke="rgba(255,255,255,0.62)" strokeWidth="1.2" />
+            <circle cx="115" cy="180" r="11" fill="rgba(255,255,255,0.35)" />
+          </g>
+
+          {/* ── RIGHT BADGE SEAL ── */}
+          <g className="h-float-b" style={{ transformOrigin: '1285px 170px' }}>
+            <circle cx="1285" cy="170" r="104" fill="none" stroke="rgba(255,255,255,0.26)" strokeWidth="1.8"
+              strokeDasharray="12 8"
+              style={{ animation: 'spin-ccw 14s linear infinite', transformOrigin: '1285px 170px' }} />
+            <circle cx="1285" cy="170" r="76" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.38)" strokeWidth="1.8"
+              style={{ animation: 'spin-cw 10s linear infinite', transformOrigin: '1285px 170px' }} />
+            <circle cx="1285" cy="170" r="52" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.30)" strokeWidth="1.4" />
+            <polygon points="1285,130 1295,155 1324,155 1301,172 1310,198 1285,181 1260,198 1269,172 1246,155 1275,155"
+              fill="rgba(255,255,255,0.42)" stroke="rgba(255,255,255,0.60)" strokeWidth="1.2" />
+            <circle cx="1285" cy="170" r="10" fill="rgba(255,255,255,0.32)" />
+          </g>
+
+          {/* ── LEAF / ECO ICON — top left area ── */}
+          <g className="h-float-c" style={{ transformOrigin: '340px 70px' }}>
+            <circle cx="340" cy="70" r="55" fill="none" stroke="rgba(255,255,255,0.26)" strokeWidth="1.4"
+              strokeDasharray="9 7"
+              style={{ animation: 'spin-ccw 18s linear infinite', transformOrigin: '340px 70px' }} />
+            <circle cx="340" cy="70" r="36" fill="rgba(255,255,255,0.09)" stroke="rgba(255,255,255,0.36)" strokeWidth="1.4" />
+            {/* leaf shape */}
+            <path d="M340,48 Q362,55 358,78 Q340,82 330,65 Q322,50 340,48 Z"
+              fill="rgba(255,255,255,0.42)" stroke="rgba(255,255,255,0.60)" strokeWidth="1.2" />
+            <line x1="340" y1="48" x2="340" y2="82" stroke="rgba(255,255,255,0.55)" strokeWidth="1.2" />
+          </g>
+
+          {/* ── SHOPPING BAG ICON — top right area ── */}
+          <g className="h-float-d" style={{ transformOrigin: '1060px 285px' }}>
+            <circle cx="1060" cy="285" r="58" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="1.4"
+              strokeDasharray="8 7"
+              style={{ animation: 'spin-cw 20s linear infinite', transformOrigin: '1060px 285px' }} />
+            {/* bag shape */}
+            <rect x="1040" y="268" width="40" height="32" rx="4"
+              fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.48)" strokeWidth="1.8" />
+            <path d="M1048,268 Q1048,258 1060,258 Q1072,258 1072,268"
+              fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth="2" strokeLinecap="round" />
+          </g>
+
+          {/* ── RECYCLING SYMBOL — top center ── */}
+          <g className="h-float-a" style={{ transformOrigin: '700px 52px', animationDelay: '1s' }}>
+            <circle cx="700" cy="52" r="42" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.38)" strokeWidth="1.6"
+              style={{ animation: 'spin-cw 22s linear infinite', transformOrigin: '700px 52px' }} />
+            <circle cx="700" cy="52" r="28" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.28)" strokeWidth="1.2" />
+            <text x="700" y="59" textAnchor="middle" fill="rgba(255,255,255,0.72)" fontSize="22">♻</text>
+          </g>
+
+          {/* ── ORBIT RINGS — center-left ── */}
+          <circle cx="390" cy="220" r="90" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="1.6"
+            strokeDasharray="15 10"
+            style={{ animation: 'spin-cw 18s linear infinite', transformOrigin: '390px 220px' }} />
+          <circle cx="390" cy="220" r="62" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.1"
+            strokeDasharray="9 11"
+            style={{ animation: 'spin-ccw 13s linear infinite', transformOrigin: '390px 220px' }} />
+
+          {/* ── ORBIT RINGS — center-right ── */}
+          <circle cx="1010" cy="115" r="95" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="1.6"
+            strokeDasharray="15 10"
+            style={{ animation: 'spin-ccw 20s linear infinite', transformOrigin: '1010px 115px' }} />
+          <circle cx="1010" cy="115" r="65" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.1"
+            strokeDasharray="9 11"
+            style={{ animation: 'spin-cw 14s linear infinite', transformOrigin: '1010px 115px' }} />
+
+          {/* ── RIBBON BANNERS ── */}
+          <g className="h-float-b" style={{ transformOrigin: '265px 305px', animationDelay: '0.5s' }}>
+            <rect x="175" y="297" width="180" height="18" rx="5" fill="rgba(255,255,255,0.22)" />
+            <polygon points="175,297 161,306 175,315" fill="rgba(255,255,255,0.22)" />
+            <polygon points="355,297 369,306 355,315" fill="rgba(255,255,255,0.22)" />
+          </g>
+          <g className="h-float-a" style={{ transformOrigin: '1148px 40px', animationDelay: '2.5s' }}>
+            <rect x="1058" y="32" width="180" height="18" rx="5" fill="rgba(255,255,255,0.18)" />
+            <polygon points="1058,32 1044,41 1058,50" fill="rgba(255,255,255,0.18)" />
+            <polygon points="1238,32 1252,41 1238,50" fill="rgba(255,255,255,0.18)" />
+          </g>
+
+          {/* ── CHECKMARK CIRCLES ── */}
+          <g className="h-pulse" style={{ transformOrigin: '585px 275px' }}>
+            <circle cx="585" cy="275" r="34" fill="none" stroke="rgba(255,255,255,0.42)" strokeWidth="2.2" />
+            <polyline points="572,275 581,286 600,263" fill="none" stroke="rgba(255,255,255,0.68)"
+              strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+          <g className="h-pulse2" style={{ transformOrigin: '848px 68px' }}>
+            <circle cx="848" cy="68" r="30" fill="none" stroke="rgba(255,255,255,0.36)" strokeWidth="2" />
+            <polyline points="836,68 845,78 862,57" fill="none" stroke="rgba(255,255,255,0.62)"
+              strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+
+          {/* ── TWINKLING STARS ── */}
+          {[
+            [478, 28], [538, 302], [818, 22], [918, 312], [1158, 205],
+            [203, 98], [658, 290], [773, 48], [1088, 322], [298, 282]
+          ].map(([x, y], i) => (
+            <g key={i} className="h-twinkle" style={{ animationDelay: `${i * 0.38}s` }}>
+              <polygon
+                points={`${x},${y - 9} ${x + 3},${y - 3} ${x + 10},${y - 3} ${x + 5},${y + 2} ${x + 7},${y + 10} ${x},${y + 6} ${x - 7},${y + 10} ${x - 5},${y + 2} ${x - 10},${y - 3} ${x - 3},${y - 3}`}
+                fill="rgba(255,255,255,0.58)"
+              />
+            </g>
+          ))}
+
+          {/* ── DOTTED ARC PATHS ── */}
+          <path d="M 0,285 Q 220,165 448,272" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.8" strokeDasharray="7 9" />
+          <path d="M 952,65 Q 1182,162 1400,95" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.8" strokeDasharray="7 9" />
+          <path d="M 498,5 Q 700,102 902,24" fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="1.2" strokeDasharray="5 10" />
+
+          {/* ── PARTICLE DOTS scattered ── */}
+          {[
+            [220, 50, 3], [480, 310, 4], [760, 15, 3], [960, 340, 4],
+            [1120, 60, 3], [1320, 240, 4], [560, 180, 3], [155, 265, 4]
+          ].map(([x, y, r], i) => (
+            <circle key={i} cx={x} cy={y} r={r} fill="rgba(255,255,255,0.45)"
+              style={{ animation: `pulse-op ${3 + i * 0.4}s ease-in-out infinite`, animationDelay: `${i * 0.5}s` }} />
+          ))}
+        </svg>
+
+        {/* 3. Foreground content */}
+        <div className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 text-center">
+          {/* Eco badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-5 hero-badge">
+            <span className="text-green-300 text-sm">🌿</span>
+            <span className="text-white/90 text-sm font-medium tracking-wide">100% Biodegradable Products</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4 shimmer-text">
+            Our Products
+          </h1>
+          <p className="text-lg text-green-50/90 max-w-2xl mx-auto">
             Explore our range of eco-friendly, biodegradable packaging solutions
           </p>
         </div>
       </div>
 
+      {/* ══════════════════════════════════════
+          MAIN CONTENT
+      ══════════════════════════════════════ */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         {/* Search */}
@@ -618,7 +820,7 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        {/* Category Filter Tabs — like a food app */}
+        {/* Category Filter Tabs */}
         <div className="flex gap-2 overflow-x-auto pb-4 mb-8 scrollbar-hide">
           {CATEGORIES.map((category) => (
             <button
@@ -631,7 +833,6 @@ export default function ProductsPage() {
               }`}
             >
               {category}
-              {/* Count badge */}
               <span className={`ml-2 px-1.5 py-0.5 rounded-full text-xs ${
                 selectedCategory === category ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-500'
               }`}>
@@ -675,17 +876,12 @@ export default function ProductsPage() {
               >
                 <div className="relative">
                   {product.images && product.images.length > 0 ? (
-                    <img
-                      src={product.images[0]}
-                      alt={product.name}
-                      className="w-full h-52 object-cover"
-                    />
+                    <img src={product.images[0]} alt={product.name} className="w-full h-52 object-cover" />
                   ) : (
                     <div className="w-full h-52 flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
                       <Package className="h-16 w-16 text-green-600" />
                     </div>
                   )}
-                  {/* Category badge on image */}
                   {product.category && (
                     <span className="absolute top-3 left-3 px-2 py-1 bg-white/90 backdrop-blur-sm text-green-700 text-xs rounded-full font-medium shadow-sm">
                       {product.category}
@@ -697,17 +893,14 @@ export default function ProductsPage() {
                     </span>
                   )}
                 </div>
-
                 <div className="p-5">
                   <h3 className="text-lg font-bold text-gray-900 mb-1">{product.name}</h3>
                   <p className="text-gray-500 text-sm mb-3 line-clamp-2">{product.description}</p>
-
                   {product.biodegradable_grade && (
                     <span className="inline-flex items-center px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-full font-medium mb-3">
                       🌿 {product.biodegradable_grade}
                     </span>
                   )}
-
                   <div className="flex items-center justify-between mt-3">
                     <div>
                       <p className="text-xs text-gray-400">Starting from</p>
@@ -720,7 +913,6 @@ export default function ProductsPage() {
                       Get Quote
                     </button>
                   </div>
-
                   {product.min_order_quantity > 1 && (
                     <p className="text-xs text-gray-400 mt-2">Min. order: {product.min_order_quantity} units</p>
                   )}
@@ -753,7 +945,6 @@ export default function ProductsPage() {
                 </button>
               </div>
 
-              {/* Image Gallery */}
               {selectedProduct.images && selectedProduct.images.length > 0 ? (
                 <div>
                   <img
@@ -765,9 +956,7 @@ export default function ProductsPage() {
                     <div className="flex gap-2 mb-4">
                       {selectedProduct.images.map((img, idx) => (
                         <img
-                          key={idx}
-                          src={img}
-                          alt=""
+                          key={idx} src={img} alt=""
                           onClick={() => setActiveImageIndex(idx)}
                           className={`h-16 w-16 object-cover rounded-lg cursor-pointer border-2 transition-all ${
                             activeImageIndex === idx ? 'border-green-500' : 'border-transparent'
@@ -845,11 +1034,13 @@ export default function ProductsPage() {
         </div>
       )}
 
-      {/* Footer */}
+      {/* ══════════════════════════════════════
+          FOOTER
+      ══════════════════════════════════════ */}
       <footer className="relative bg-gradient-to-br from-green-700 via-green-600 to-emerald-700 text-white overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-3xl" />
           <Leaf className="absolute top-20 left-10 w-8 h-8 text-green-300/20" />
           <Leaf className="absolute top-40 right-20 w-6 h-6 text-emerald-300/20" />
           <Leaf className="absolute bottom-20 left-1/3 w-10 h-10 text-green-400/20" />
@@ -857,6 +1048,7 @@ export default function ProductsPage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-4 cursor-pointer" onClick={() => navigate('/')}>
                 <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
@@ -868,8 +1060,11 @@ export default function ProductsPage() {
                 Leading the way in sustainable packaging solutions. Making the world greener, one bag at a time.
               </p>
               <div className="flex gap-3 pt-2">
-                {[{ Icon: Facebook, link: 'https://facebook.com' }, { Icon: Twitter, link: 'https://twitter.com' },
-                  { Icon: Instagram, link: 'https://instagram.com' }, { Icon: Linkedin, link: 'https://linkedin.com' }
+                {[
+                  { Icon: Facebook,  link: 'https://facebook.com'  },
+                  { Icon: Twitter,   link: 'https://twitter.com'   },
+                  { Icon: Instagram, link: 'https://instagram.com' },
+                  { Icon: Linkedin,  link: 'https://linkedin.com'  },
                 ].map(({ Icon, link }, idx) => (
                   <a key={idx} href={link} target="_blank" rel="noopener noreferrer"
                     className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300 hover:scale-110">
@@ -881,12 +1076,16 @@ export default function ProductsPage() {
 
             <div>
               <h4 className="text-lg font-bold mb-4 flex items-center gap-2">
-                <div className="w-1 h-6 bg-green-300 rounded-full"></div>Quick Links
+                <div className="w-1 h-6 bg-green-300 rounded-full" />Quick Links
               </h4>
               <ul className="space-y-3">
-                {[{ label: 'Home', path: '/' }, { label: 'Products', path: '/products' },
-                  { label: 'Sustainability', path: '/sustainability' }, { label: 'Community', path: '/community' },
-                  { label: 'Certificates', path: '/certifications' }, { label: 'Contact', path: '/contact' },
+                {[
+                  { label: 'Home',          path: '/'               },
+                  { label: 'Products',      path: '/products'       },
+                  { label: 'Sustainability', path: '/sustainability' },
+                  { label: 'Community',     path: '/community'      },
+                  { label: 'Certificates',  path: '/certifications' },
+                  { label: 'Contact',       path: '/contact'        },
                 ].map((link, idx) => (
                   <li key={idx}>
                     <button onClick={() => navigate(link.path)}
@@ -901,12 +1100,12 @@ export default function ProductsPage() {
 
             <div>
               <h4 className="text-lg font-bold mb-4 flex items-center gap-2">
-                <div className="w-1 h-6 bg-green-300 rounded-full"></div>Our Products
+                <div className="w-1 h-6 bg-green-300 rounded-full" />Our Products
               </h4>
               <ul className="space-y-3">
                 {CATEGORIES.filter(c => c !== 'All').map((cat, idx) => (
                   <li key={idx}>
-                    <button onClick={() => { navigate('/products'); setSelectedCategory(cat); }}
+                    <button onClick={() => navigate('/products')}
                       className="text-green-100 hover:text-white transition-colors flex items-center gap-2 group">
                       <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                       <span className="group-hover:translate-x-1 transition-transform">{cat}</span>
@@ -918,7 +1117,7 @@ export default function ProductsPage() {
 
             <div>
               <h4 className="text-lg font-bold mb-4 flex items-center gap-2">
-                <div className="w-1 h-6 bg-green-300 rounded-full"></div>Get In Touch
+                <div className="w-1 h-6 bg-green-300 rounded-full" />Get In Touch
               </h4>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -931,7 +1130,9 @@ export default function ProductsPage() {
                 </li>
                 <li className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-green-300 flex-shrink-0" />
-                  <a href="mailto:bagasoilcompostable@gmail.com" className="text-green-100 hover:text-white transition-colors">bagasoilcompostable@gmail.com</a>
+                  <a href="mailto:bagasoilcompostable@gmail.com" className="text-green-100 hover:text-white transition-colors">
+                    bagasoilcompostable@gmail.com
+                  </a>
                 </li>
               </ul>
             </div>
@@ -945,8 +1146,8 @@ export default function ProductsPage() {
               </div>
               <div className="flex flex-wrap justify-center gap-4 md:gap-6">
                 <button onClick={() => navigate('/privacy')} className="text-green-100 hover:text-white transition-colors">Privacy Policy</button>
-                <button onClick={() => navigate('/terms')} className="text-green-100 hover:text-white transition-colors">Terms of Service</button>
-                <button onClick={() => navigate('/cookie')} className="text-green-100 hover:text-white transition-colors">Cookie Policy</button>
+                <button onClick={() => navigate('/terms')}   className="text-green-100 hover:text-white transition-colors">Terms of Service</button>
+                <button onClick={() => navigate('/cookie')}  className="text-green-100 hover:text-white transition-colors">Cookie Policy</button>
               </div>
             </div>
           </div>
